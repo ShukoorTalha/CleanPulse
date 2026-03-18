@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>CleanPulse</title>
+    <!-- Google Fonts for Modern Typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body class="dark-theme">
+    <div id="app" class="app-container glass-bg">
+        <!-- Sidebar Navigation -->
+        <nav class="sidebar">
+            <div class="brand">
+                <div class="brand-icon">C</div>
+                <h1>CleanPulse</h1>
+            </div>
+            <ul class="nav-links">
+                <li class="active" data-view="dashboard">
+                    <svg viewBox="0 0 24 24" fill="none" class="icon"><path d="M4 6C4 4.89543 4.89543 4 6 4H8C9.10457 4 10 4.89543 10 6V10C10 11.1046 9.10457 12 8 12H6C4.89543 12 4 11.1046 4 10V6ZM4 18C4 16.8954 4.89543 16 6 16H8C9.10457 16 10 16.8954 10 18V20C10 21.1046 9.10457 22 8 22H6C4.89543 22 4 21.1046 4 20V18ZM14 6C14 4.89543 14.8954 4 16 4H18C19.1046 4 20 4.89543 20 6V8C20 9.10457 19.1046 10 18 10H16C14.8954 10 14 9.10457 14 8V6ZM14 14C14 12.8954 14.8954 12 16 12H18C19.1046 12 20 12.8954 20 14V20C20 21.1046 19.1046 22 18 22H16C14.8954 22 14 21.1046 14 20V14Z" fill="currentColor"/></svg>
+                    Dashboard
+                </li>
+                <li data-view="clean">
+                    <svg viewBox="0 0 24 24" fill="none" class="icon"><path d="M19 7L18.1327 19.1425C18.0579 20.1891 17.187 21 16.1378 21H7.86224C6.81296 21 5.94208 20.1891 5.86732 19.1425L5 7M10 11V17M14 11V17M15 7V4C15 3.44772 14.5523 3 14 3H10C9.44772 3 9 3.44772 9 4V7M4 7H20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    Clean
+                </li>
+                <li data-view="analyze">
+                    <svg viewBox="0 0 24 24" fill="none" class="icon"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/><path d="M12 12L12 6C15.3137 6 18 8.68629 18 12H12Z" fill="currentColor"/></svg>
+                    Analyze
+                </li>
+            </ul>
+        </nav>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Dashboard View -->
+            <section id="view-dashboard" class="view active">
+                <header class="view-header">
+                    <h2>System Status</h2>
+                    <div class="health-badge">Health: <span id="health-score">--</span></div>
+                </header>
+                
+                <div class="dashboard-grid">
+                    <!-- CPU Card -->
+                    <div class="stat-card glass-card">
+                        <div class="card-header">
+                            <h3>CPU</h3>
+                            <span class="value" id="cpu-percent">--%</span>
+                        </div>
+                        <div class="progress-bar"><div class="progress-fill" id="cpu-fill"></div></div>
+                        <div class="card-footer">
+                            <span id="cpu-cores">-- Cores</span>
+                        </div>
+                    </div>
+
+                    <!-- RAM Card -->
+                    <div class="stat-card glass-card">
+                        <div class="card-header">
+                            <h3>Memory</h3>
+                            <span class="value" id="ram-percent">--%</span>
+                        </div>
+                        <div class="progress-bar"><div class="progress-fill" id="ram-fill"></div></div>
+                        <div class="card-footer">
+                            <span id="ram-used">--</span> / <span id="ram-total">--</span>
+                        </div>
+                    </div>
+
+                    <!-- Disk Card -->
+                    <div class="stat-card glass-card">
+                        <div class="card-header">
+                            <h3>Disk</h3>
+                            <span class="value" id="disk-percent">--%</span>
+                        </div>
+                        <div class="progress-bar"><div class="progress-fill" id="disk-fill"></div></div>
+                        <div class="card-footer">
+                            <span id="disk-free">--</span> Free
+                        </div>
+                    </div>
+                </div>
+
+                <div class="hero-card glass-card">
+                    <div class="hero-content">
+                        <h3>Optimization Recommended.</h3>
+                        <p>Your Mac has accumulated temporary files and cache that can be removed to boost performance and free up space.</p>
+                        <button class="btn btn-primary glow" onclick="switchView('clean')">Deep Clean System</button>
+                    </div>
+                    <div class="hero-graphic">
+                        <div class="orbit"></div>
+                        <div class="core-globe"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Clean View -->
+            <section id="view-clean" class="view">
+                <header class="view-header">
+                    <h2>Deep Clean System</h2>
+                </header>
+                <div class="clean-container glass-card">
+                    <p class="subtitle">Review caches, logs, and leftovers to reclaim space.</p>
+                    <div class="action-logs" id="clean-logs">
+                        <div class="log-line">Ready to clean...</div>
+                    </div>
+                    <div class="actions">
+                        <button class="btn btn-primary glow" id="start-clean-btn" onclick="runClean()">Start Cleaning</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Analyze View -->
+            <section id="view-analyze" class="view">
+                <header class="view-header">
+                    <h2>Disk Analyzer</h2>
+                </header>
+                <div class="analyze-container glass-card">
+                    <p class="subtitle">Visualizing top-level directories</p>
+                    <div class="action-logs" id="analyze-logs">
+                        <div class="log-line">Choose a directory or load defaults...</div>
+                    </div>
+                    <div class="actions">
+                        <button class="btn btn-primary" onclick="runAnalyze()">Run Analysis</button>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+    <script src="./src/main.js" type="module"></script>
+</body>
+</html>
